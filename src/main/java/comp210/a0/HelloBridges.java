@@ -17,9 +17,9 @@ public class HelloBridges {
     /** Grid size in pixels. 16x16 is small enough to draw by hand. */
     private static final int SIZE = 16;
 
-    private static final Color CAROLINA = new Color(123, 175, 212);
-    private static final Color PLUM = new Color(58, 42, 68);
-    private static final Color KIWI = new Color(142, 188, 92);
+    private static final Color BLUE = new Color(0, 0, 255);
+    private static final Color WHITE = new Color(255,255,255);
+    private static final Color RED = new Color(255,0,0);
 
     public static void main(String[] args) throws Exception {
         // Step 1: read the secrets out of .env instead of hardcoding them.
@@ -54,18 +54,26 @@ public class HelloBridges {
      * fit in SIZE x SIZE and use at least three colors; past that, no rules.
      */
     private static ColorGrid makeGrid() {
-        ColorGrid grid = new ColorGrid(SIZE, SIZE, CAROLINA);
+        ColorGrid grid = new ColorGrid(SIZE, SIZE, BLUE);
 
-        for (int i = 0; i < SIZE; i++) {
-            grid.set(i, i, PLUM);
-            grid.set(i, SIZE - 1 - i, PLUM);
+        for (int row = 0; row < SIZE; row++){
+            for (int col = 0; col < SIZE; col++){
+                if (row % 2 == 0){
+                    grid.set(row,col,RED);
+                }else{
+                    grid.set(row,col,WHITE);
+                }
+            }
         }
-
-        for (int i = 0; i < SIZE; i++) {
-            grid.set(0, i, KIWI);
-            grid.set(SIZE - 1, i, KIWI);
-            grid.set(i, 0, KIWI);
-            grid.set(i, SIZE - 1, KIWI);
+        int CORNER_SIZE = SIZE / 2; //50% * 50% = 25%
+        for (int row = 0; row < CORNER_SIZE; row++){
+            for (int col = 0; col < CORNER_SIZE; col++){
+                if (row % 3 == 0 && col % 3 == 0){
+                    grid.set(row,col,WHITE);
+                    continue;
+                }
+                grid.set(row,col,BLUE);
+            }
         }
 
         return grid;
